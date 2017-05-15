@@ -1,0 +1,57 @@
+<html ng-app="app.todos">
+    <head>
+        <title> Node and Angular Todo App</title>
+
+        <!-- load cdnOffline styles -->
+        <link rel="stylesheet" href="assets/cdnOffline/bootstrap.min.css"/>
+        <link rel="stylesheet" href="assets/cdnOffline/font-awesome.min.css"/>
+
+        <!-- Load xeditable style -->
+        <link rel="stylesheet" href="assets/cdnOffline/xeditable.min.css"/>
+        
+        <!-- load app styles -->
+        <link rel="stylesheet" href="assets/css/style.css"/>
+
+        <!-- load cdnOffline scripts-->
+        <script src="assets/cdnOffline/angular.min.js"></script>
+        
+        <!-- load xeditable -->
+        <script src="assets/cdnOffline/xeditable.min.js"></script>
+
+        <!-- Load app -->
+        <script src="assets/js/main/app.js"></script>
+        <script src="assets/js/main/services/todoService.js"></script>
+    </head>
+    <body ng-controller="todoController">
+        <div class="container">
+            <div class="jombotron text-center">
+                <h1>{{ appName }} <span class="label label-info">{{ todos.length }}</span></h1>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-6 col-sm-offset-3">
+                    <div class="checkbox" ng-repeat="todo in todos">
+                        <input type="checkbox" ng-model="todo.isDone" ng-change="updateTodo(todo)"> 
+                        <a href ng-click="deleteTodo(todo)"><i class="fa fa-remove"></i></a> 
+                        <a href  ng-click="textBtnForm.$show()" ng-hide="textBtnForm.$visible"><i class="fa fa-edit"></i></a>                                                                       
+                        <span ng-class="{strike: todo.isDone}" editable-text="todo.text" e-form="textBtnForm" ng-click="textBtnForm.$show()" ng-hide="textBtnForm.$visible" onaftersave="updateTodo(todo)">{{todo.text}}</span>
+                    </div>
+                    <p class="text-center" ng-show="loading">
+                        <span class="fa fa-spinner fa-spin fa-3x"></span>
+                    </p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-8 col-sm-offset-2 text-center">
+                    <form>
+                        <div class="form-group">
+                            <input type="text" ng-model="formData.text" class="form-control input-lg text-center" placeholder="What are you going to do?">
+                        </div>
+                        <button type="submit" ng-disabled="!formData.text" class="btn btn-primary btn-lg" ng-click="createTodo()">Add</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
